@@ -1,16 +1,15 @@
-from .loader_nodes import GLMImageLoader
-from .sampler_nodes import GLMImageSampler, GLMImageImg2Img
+"""GLM-Image custom nodes — separate-loader architecture only.
 
-NODE_CLASS_MAPPINGS = {
-    "GLMImageLoader": GLMImageLoader,
-    "GLMImageSampler": GLMImageSampler,
-    "GLMImageImg2Img": GLMImageImg2Img
-}
+Legacy monolithic pipeline loader and pipeline-extract nodes were removed
+on 2026-05-01 per user request ("Remove legacy. Add I2I support.").
+"""
 
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "GLMImageLoader": "GLMImage Loader",
-    "GLMImageSampler": "GLMImage Text-to-Image Sampler",
-    "GLMImageImg2Img": "GLMImage Image-to-Image Sampler"
-}
+from .separate_nodes import (
+    SEPARATE_NODE_CLASS_MAPPINGS,
+    SEPARATE_NODE_DISPLAY_NAME_MAPPINGS,
+)
+
+NODE_CLASS_MAPPINGS = dict(SEPARATE_NODE_CLASS_MAPPINGS)
+NODE_DISPLAY_NAME_MAPPINGS = dict(SEPARATE_NODE_DISPLAY_NAME_MAPPINGS)
 
 __all__ = ["NODE_CLASS_MAPPINGS", "NODE_DISPLAY_NAME_MAPPINGS"]

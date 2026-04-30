@@ -1,0 +1,33 @@
+{
+  "1": {
+    "class_type": "GLMImageLoader",
+    "inputs": {
+      "model_id": "Disty0/GLM-Image-SDNQ-4bit-dynamic",
+      "dtype": "bf16",
+      "device_map": "balanced",
+      "enable_cpu_offload": true,
+      "attention_backend": "sdpa",
+      "enable_vae_tiling": true,
+      "enable_vae_slicing": true,
+      "enable_attention_slicing": false,
+      "sequential_cpu_offload": false
+    }
+  },
+  "2": {
+    "class_type": "GLMImageSampler",
+    "inputs": {
+      "pipeline": ["1", 0],
+      "prompt": "a friendly red panda holding a sign that says 'hi'",
+      "seed": 42,
+      "steps": 4,
+      "guidance_scale": 4.0,
+      "width": 512,
+      "height": 512,
+      "batch_size": 1
+    }
+  },
+  "3": {
+    "class_type": "SaveImage",
+    "inputs": { "images": ["2", 0], "filename_prefix": "glm_legacy_4step" }
+  }
+}

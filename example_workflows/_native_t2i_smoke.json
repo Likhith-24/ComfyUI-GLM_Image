@@ -1,0 +1,62 @@
+{
+  "1": {
+    "class_type": "GLMImageLoader",
+    "inputs": {
+      "model_id": "Disty0/GLM-Image-SDNQ-4bit-dynamic",
+      "dtype": "bf16",
+      "device_map": "balanced",
+      "enable_cpu_offload": true
+    }
+  },
+  "2": {
+    "class_type": "GLMImageModelExtract",
+    "inputs": { "pipeline": ["1", 0] }
+  },
+  "3": {
+    "class_type": "GLMImageCLIPExtract",
+    "inputs": {
+      "pipeline": ["1", 0],
+      "target_width": 512,
+      "target_height": 512
+    }
+  },
+  "4": {
+    "class_type": "GLMImageVAEExtract",
+    "inputs": { "pipeline": ["1", 0] }
+  },
+  "5": {
+    "class_type": "EmptyGLMImageLatent",
+    "inputs": { "width": 512, "height": 512, "batch_size": 1 }
+  },
+  "6": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "clip": ["3", 0], "text": "a friendly red panda" }
+  },
+  "7": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "clip": ["3", 0], "text": "" }
+  },
+  "8": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["2", 0],
+      "positive": ["6", 0],
+      "negative": ["7", 0],
+      "latent_image": ["5", 0],
+      "seed": 42,
+      "steps": 4,
+      "cfg": 4.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0
+    }
+  },
+  "9": {
+    "class_type": "VAEDecode",
+    "inputs": { "samples": ["8", 0], "vae": ["4", 0] }
+  },
+  "10": {
+    "class_type": "SaveImage",
+    "inputs": { "images": ["9", 0], "filename_prefix": "glm_native_t2i" }
+  }
+}
