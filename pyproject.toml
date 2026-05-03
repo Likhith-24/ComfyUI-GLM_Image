@@ -9,7 +9,7 @@ description = "ComfyUI nodes for GLM-Image model integration (loaders + samplers
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"
-authors = [{ name = "Likhith-24" }]
+authors = [{ name = "Code2Collapse" }]
 dependencies = [
     "torch>=2.0",
     "diffusers>=0.27",
@@ -20,10 +20,10 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/Likhith-24/ComfyUI-GLM_Image"
-Issues = "https://github.com/Likhith-24/ComfyUI-GLM_Image/issues"
+Repository = "https://github.com/Code2Collapse/ComfyUI-GLM_Image"
+Issues = "https://github.com/Code2Collapse/ComfyUI-GLM_Image/issues"
 
 [tool.comfy]
-PublisherId = "likhith-24"
+PublisherId = "Code2Collapse"
 DisplayName = "ComfyUI-GLM_Image"
 Icon = "https://i.pinimg.com/736x/5d/52/19/5d5219ef27c1530bea027ff95d352e05.jpg"

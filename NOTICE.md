@@ -1,6 +1,6 @@
 # NOTICE — ComfyUI-GLM_Image
 
-Copyright (c) 2025-2026 Likhith-24  
+Copyright (c) 2025-2026 Code2Collapse  
 License: MIT (see LICENSE)
 
 This project integrates the following third-party components. Their licenses
@@ -17,7 +17,7 @@ are reproduced below as required by the respective terms.
   https://www.apache.org/licenses/LICENSE-2.0
 
 The `glm_native/` modules are original ComfyUI integration wrappers written by
-Likhith-24. They call into the model architecture that ships inside the
+Code2Collapse. They call into the model architecture that ships inside the
 `diffusers` library under the same Apache-2.0 terms.
 
 ---
