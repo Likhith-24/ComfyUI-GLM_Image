@@ -1,0 +1,335 @@
+{
+  "last_node_id": 7,
+  "last_link_id": 7,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "GLMImageCLIPLoader",
+      "pos": [
+        40,
+        40
+      ],
+      "size": [
+        320,
+        130
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "GLMImageCLIPLoader"
+      },
+      "title": "GLM CLIP Loader",
+      "widgets_values": [
+        "GLM-Image-SDNQ-4bit-dynamic",
+        "fp16"
+      ],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            1,
+            2
+          ],
+          "slot_index": 0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "GLMImageVAELoader",
+      "pos": [
+        40,
+        220
+      ],
+      "size": [
+        320,
+        130
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "GLMImageVAELoader"
+      },
+      "title": "GLM VAE Loader",
+      "widgets_values": [
+        "GLM-Image-SDNQ-4bit-dynamic",
+        "fp16"
+      ],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            4
+          ],
+          "slot_index": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "GLMImageModelLoader",
+      "pos": [
+        40,
+        400
+      ],
+      "size": [
+        320,
+        130
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "GLMImageModelLoader"
+      },
+      "title": "GLM Model Loader",
+      "widgets_values": [
+        "GLM-Image-SDNQ-4bit-dynamic",
+        "fp16",
+        "auto"
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            3
+          ],
+          "slot_index": 0
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "CLIPTextEncode",
+      "pos": [
+        440,
+        40
+      ],
+      "size": [
+        320,
+        130
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "title": "Positive Prompt",
+      "widgets_values": [
+        "a portrait of a fox in a sunlit forest, cinematic lighting, photorealistic"
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            5
+          ],
+          "slot_index": 0
+        }
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 1
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "CLIPTextEncode",
+      "pos": [
+        440,
+        220
+      ],
+      "size": [
+        320,
+        130
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "title": "Negative Prompt",
+      "widgets_values": [
+        "blurry, low quality, deformed, watermark"
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            6
+          ],
+          "slot_index": 0
+        }
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "GLMImageSeparateSampler",
+      "pos": [
+        840,
+        40
+      ],
+      "size": [
+        320,
+        130
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "GLMImageSeparateSampler"
+      },
+      "title": "GLM Sampler",
+      "widgets_values": [
+        1024,
+        1024,
+        30,
+        7.5,
+        "euler",
+        0
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            7
+          ],
+          "slot_index": 0
+        }
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 3
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 5
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 6
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "SaveImage",
+      "pos": [
+        1240,
+        40
+      ],
+      "size": [
+        320,
+        130
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "title": "Save",
+      "widgets_values": [
+        "GLM_master_%batch_num%"
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 7
+        }
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      4,
+      0,
+      "CLIP"
+    ],
+    [
+      2,
+      1,
+      0,
+      5,
+      0,
+      "CLIP"
+    ],
+    [
+      3,
+      3,
+      0,
+      6,
+      0,
+      "MODEL"
+    ],
+    [
+      4,
+      2,
+      0,
+      6,
+      1,
+      "VAE"
+    ],
+    [
+      5,
+      4,
+      0,
+      6,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      6,
+      5,
+      0,
+      6,
+      3,
+      "CONDITIONING"
+    ],
+    [
+      7,
+      6,
+      0,
+      7,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
